@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="">
+  <meta name="keywords" content="Self-Prompt-Tuning">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Revisiting the Power of Prompt for Visual Tuning</title>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+  
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+  
+      gtag('js', new Date());
+  
+      gtag('config', 'G-PYVRSFMDRL');
+    </script>
+  
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+          rel="stylesheet">
+  
+    <link rel="stylesheet" href="./static/css/bulma.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="./static/css/index.css">
+    <link rel="icon" href="./static/images/favicon.svg">
+  
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="./static/js/fontawesome.all.min.js"></script>
+    <script src="./static/js/bulma-carousel.min.js"></script>
+    <script src="./static/js/bulma-slider.min.js"></script>
+    <script src="./static/js/index.js"></script>
+  </head>
+  <body>
+
+<!-- <nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://keunhong.com">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://hypernerf.github.io">
+            HyperNeRF
+          </a>
+          <a class="navbar-item" href="https://nerfies.github.io">
+            Nerfies
+          </a>
+          <a class="navbar-item" href="https://latentfusion.github.io">
+            LatentFusion
+          </a>
+          <a class="navbar-item" href="https://photoshape.github.io">
+            PhotoShape
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</nav> -->
+
+
+<section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">Revisiting the Power of Prompt for Visual Tuning</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://scholar.google.com.hk/citations?user=ApZFks8AAAAJ&hl=zh-CN">Yuzhu Wang</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=PKFAv-cAAAAJ&hl=en">Lechao Cheng</a><sup>2✉</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://scholar.google.com.hk/citations?hl=zh-CN&user=eNtYEmcAAAAJ">Chaowei Fang</a><sup>3</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://scholar.google.com.hk/citations?hl=zh-CN&user=lKFZwK0AAAAJ">Dingwen Zhang</a><sup>3</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://dblp.org/pid/03/3126.html">Manni Duan</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://scholar.google.com.hk/citations?hl=zh-CN&user=rHagaaIAAAAJ&view_op=list_works&sortby=pubdate">Meng Wang</a><sup>2</sup>,
+              </span>
+            </div>
+  
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup>1</sup>Zhejiang Lab,</span>
+              <span class="author-block"><sup>2</sup>Hefei University of Technology,</span>
+              <span class="author-block"><sup>3</sup>Xidian University,</span>
+              <span class="author-block"><sup>3</sup>Northwestern Polytechnical University,</span>
+            </div>
+            ✉ Corresponding author.
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- arxiv Link. -->
+                </span>
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2402.02382"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+                <!-- Code Link. -->
+                <span class="link-block">
+                  <a href="https://github.com/WangYZ1608/Self-Prompt-Tuning"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                    </a>
+                </span>
+              </div>
+              <h1><strong style="color: red; font-size: x-large;">ICML 2024</strong></h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Visual prompt tuning (VPT) is a promising solution incorporating 
+              learnable prompt tokens to customize pre-trained models for downstream tasks. 
+              However, VPT and its variants often encounter challenges like prompt initialization, 
+              prompt length, and subpar performance in self-supervised pretraining, 
+              hindering successful contextual adaptation. 
+              This study commences by exploring the correlation evolvement between prompts and 
+              patch tokens during proficient training. 
+              Inspired by the observation that the prompt tokens tend to share 
+              high mutual information with patch tokens, 
+              we propose initializing prompts with downstream token prototypes. 
+              The strategic initialization, a stand-in for the previous initialization, 
+              substantially improves performance. 
+              To refine further, we optimize token construction with a streamlined pipeline 
+              that maintains excellent performance with almost no increase in computational expenses 
+              compared to VPT. 
+              Exhaustive experiments show our proposed approach outperforms existing methods 
+              by a remarkable margin. 
+              For instance, after MAE pre-training, 
+              our method improves accuracy by up to 10%-30% compared to VPT, 
+              and outperforms Full fine-tuning 19 out of 24 cases while using less than 0.4% of 
+              learnable parameters.
+              Besides, the experimental results demonstrate the proposed SPT is robust to 
+              prompt lengths and scales well with model capacity and training data size. 
+              We finally provide an insightful exploration into the amount of target data 
+              facilitating the adaptation of pre-trained models to downstream tasks.
+            </p>
+          </div>
+        </div>
+      </div>
+      <!--/ Abstract. -->
+  
+    </div> -->
+  </section>
+
+  <!-- 01 Summary of the paper. -->
+  <section class="section">
+    <div class="container is-max-desktop">
+        <div class="column is-full-width">
+          <h2 class="title is-4">01 Summary of the paper</h2>
+            <div class="column content">
+              <p>
+                Our work proposes a simple and novel method (termed <strong>SPT</strong>) to improve visual prompt tuning. 
+                Specifically, we observe that the mutual information between prompt tokens and image patch tokens 
+                gradually increases during the prompt tuning process of VPT (a strong baseline), 
+                and propose the idea of <strong>constructing prompts based on inferred token prototypes</strong>. 
+                This idea can make the prompt tokens and patch tokens share larger mutual information 
+                at the beginning of training, 
+                which benefits the rapid convergence of the model and achieve higher accuracy. 
+                Sufficient experiments and analysis have verified the effectiveness of our method.
+              </p>  
+            </div>
+        </div>
+    </div>
+  <!-- 01 Summary of the paper. -->
+    
+  
+  <!-- 02 Weakness of existing methods -->
+  <section class="section">
+    <div class="container is-max-desktop">
+        <div class="column is-full-width">
+          <h2 class="title is-4">02 Weakness of existing methods</h2>
+            <div class="column content">
+              <p>
+                We first examine the weakness of existing methods (e.g., VPT, GateVPT, P-Tuning, etc.) and summarize them as follows.
+                <br/>
+                <strong>Prompt initialization.</strong> Existing prompt-based methods employ the strategy of initializing prompts randomly (e.g., uniform or normal) and then update them during tuning, 
+                akin to optimizing the parameters of neural networks. 
+                However, the distinct initialization for prompts significantly impact accuracy, 
+                as shown in the original paper of VPT and its variants.
+                <br/>
+                <strong>Prompt length.</strong> The only extra hyperparameter that requires tweaking, 
+                in comparison to Full fine-tuning, is the number of inserted prompt tokens. 
+                While ablation studies showcase that VPT and its variants are usually 
+                sensitive to the number of inserted prompts.
+                <br/>
+                <strong>Subpar performance with self-supervised pretraining.</strong> Recent research (GateVPT) has proven that VPT and its variants perform poorly under self-supervised pre-training models.
+              </p>
+            </div>
+        </div>
+    </div>
+  <!-- 02 Weakness of existing methods -->
+  
+  
+  <!-- 03 Observation and motivation -->
+  <section class="section">
+    <div class="container is-max-desktop">
+        <div class="column is-full-width">
+          <h2 class="title is-4">03 Observation and motivation</h2>
+            <div class="column content">
+              <p>
+                We infer that prompts initialization is the main factor and pay attention to the relationship between prompt tokens and image patch tokens during tuning. 
+                <br/>
+                We observe that the mutual information between them gradually increases, as illustrated blue curves in <span style="color: #f90b0be9">Fig. 1</span>.
+                <br/>
+                This motivates us to construct prompts based on inferred token prototypes, as this will make the prompt tokens and patch tokens share larger mutual information at the beginning of training.
+                <br/>
+                <!-- Your image here -->
+                <img src="static/images/nmi.png" alt="1" style="width: auto; height: auto; display: block; margin: 0 auto;"/> 
+                <p style="text-align: justify; font-size: 16px; line-height: 1.5; margin-top: 10px; color: #f90b0be9;">
+                  <span style="color: #f90b0be9">Figure 1.</span> VPT presents the behavior of the Normalized Mutual Information (NMI) between prompts and patch tokens gradually increases during tuning time. 
+                  SPT has large NMI at the beginning, which will facilitate rapid convergence and achieve more advanced results.
+                </p>
+              </p>
+            </div>
+        </div>
+    </div>
+  <!-- 03 Observation and motivation -->
+
+
+  <!-- 04 Framework and method -->
+  <section class="section">
+    <div class="container is-max-desktop">
+        <div class="column is-full-width">
+          <h2 class="title is-4">04 Framework and method</h2>
+            <div class="column content">
+              <p>
+                <!-- Your image here -->
+                <img src="static/images/framework.png" alt="1" style="width: auto; height: auto; display: block; margin: 0 auto;"/> 
+                <p style="text-align: justify; font-size: 16px; line-height: 1.5; margin-top: 10px; color: #f90b0be9;">
+                  <span style="color: #f90b0be9">Figure 2.</span> <strong>Self-Prompt Tuning.</strong> We propose to construct prompts based on the input for visual tuning. 
+                  <strong>Left:</strong> We input a batch of the training data from the downstream task into the pre-trained model to get the forward patch embeddings. 
+                  <strong>Right:</strong> We initialize prompts with sampled patch embeddings. 
+                  Similar to VPT, we proposed SPT-Shallow and SPT-Deep depending on the layers involved. 
+                  Only the prompts and task head parameters are learnable during adaptation on downstream tasks while the transformer encoder is frozen.
+                </p>
+                The number of candidate tokens is usually far more than the length of the prompts. To alleviate this issue, we propose four sampling strategies.
+                <br/>
+                k-means cluster, better performance but time-consuming.
+                <br/>
+                maxpooling, meanpooling, and random sample, satisfactory performance and negligible time cost.
+                <br/>
+              </p>
+            </div>
+        </div>
+    </div>
+  <!-- 04 Framework and method -->
+
+
+
+  <!-- 05 Experiments and annalysis -->
+  <section class="section">
+    <div class="container is-max-desktop">
+        <div class="column is-full-width">
+          <h2 class="title is-4">05 Experiments and annalysis</h2>
+            <div class="column content">
+              <p>
+                <strong>Ablation on prompt sampling strategies.</strong>
+                <br/>
+                <p style="text-align: justify; font-size: 16px; line-height: 1.5; margin-top: 10px; color: #f90b0be9;">
+                    <span style="color: #f90b0be9">Table 1.</span>  Experimental results (%) show that all prompt sampling strategies are significantly superior to the VPT baseline with random initialization.
+                </p>
+                <img src="static/images/table1.png" alt="1" style="width: auto; height: auto; display: block; margin: 0 auto;"/>
+                <br/>
+                <strong>Ablation on basic components.</strong>
+                <br/>
+                <p style="text-align: justify; font-size: 16px; line-height: 1.5; margin-top: 10px; color: #f90b0be9;">
+                    <span style="color: #f90b0be9">Figure 3.</span> SPT is robust to prompt length changes and presents better scaling behavior.
+                </p>
+                <img src="static/images/ablation.png" alt="1" style="width: auto; height: auto; display: block; margin: 0 auto;"/>
+                <br/>
+                <strong>Comparison under self-supervised pre-trained backbones.</strong>
+                <br/>
+                <p style="text-align: justify; font-size: 16px; line-height: 1.5; margin-top: 10px; color: #f90b0be9;">
+                    <span style="color: #f90b0be9">Table 2.</span>  Our method achieves gains of 10% to 30% in average accuracy compared to VPT, and even outperforms Full fine-tuning in 19 out of 24 cases under MAE pre-training.
+                </p>
+                <img src="static/images/table2.png" alt="1" style="width: auto; height: auto; display: block; margin: 0 auto;"/>
+                <br/>
+                <strong>Comparison under supervised pre-trained backbones.</strong>
+                <br/>
+                <p style="text-align: justify; font-size: 16px; line-height: 1.5; margin-top: 10px; color: #f90b0be9;">
+                    <span style="color: #f90b0be9">Table 3.</span>  “Input” and “Backbone” indicate the tuning parameter scope of each method. SPT achieves competitive results with far fewer trainable parameters.
+                </p>
+                <img src="static/images/table3.png" alt="1" style="width: auto; height: auto; display: block; margin: 0 auto;"/>
+              </p>
+            </div>
+        </div>
+    </div>
+  <!-- 05 Experiments and annalysis -->
+  
+    </div>
+  </section>
+
+
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>@article{wang2024revisiting,
+        title={Revisiting the Power of Prompt for Visual Tuning}, 
+        author={Wang, Yuzhu and Cheng, Lechao and Fang, Chaowei and Zhang, Dingwen and Duan, Manni and Wang, Meng},
+        year={2024},
+        eprint={2402.02382},
+        archivePrefix={arXiv},
+        primaryClass={cs.CV}
+    }</code></pre>
+    </div>
+  </section>
