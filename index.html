@@ -256,7 +256,7 @@
                 <br/>
                 <!-- Your image here -->
                 <img src="static/images/nmi.png" alt="1" style="width: auto; height: auto; display: block; margin: 0 auto;"/> 
-                <p style="text-align: justify; font-size: 16px; line-height: 1.5; margin-top: 10px; color: #f90b0be9;">
+                <p style="text-align: justify; font-size: 16px; line-height: 1.5; margin-top: 10px;">
                   <span style="color: #f90b0be9">Figure 1.</span> VPT presents the behavior of the Normalized Mutual Information (NMI) between prompts and patch tokens gradually increases during tuning time. 
                   SPT has large NMI at the beginning, which will facilitate rapid convergence and achieve more advanced results.
                 </p>
@@ -276,7 +276,7 @@
               <p>
                 <!-- Your image here -->
                 <img src="static/images/framework.png" alt="1" style="width: auto; height: auto; display: block; margin: 0 auto;"/> 
-                <p style="text-align: justify; font-size: 16px; line-height: 1.5; margin-top: 10px; color: #f90b0be9;">
+                <p style="text-align: justify; font-size: 16px; line-height: 1.5; margin-top: 10px;">
                   <span style="color: #f90b0be9">Figure 2.</span> <strong>Self-Prompt Tuning.</strong> We propose to construct prompts based on the input for visual tuning. 
                   <strong>Left:</strong> We input a batch of the training data from the downstream task into the pre-trained model to get the forward patch embeddings. 
                   <strong>Right:</strong> We initialize prompts with sampled patch embeddings. 
@@ -285,9 +285,9 @@
                 </p>
                 The number of candidate tokens is usually far more than the length of the prompts. To alleviate this issue, we propose four sampling strategies.
                 <br/>
-                k-means cluster, better performance but time-consuming.
+                <strong>k-means cluster</strong>, better performance but time-consuming.
                 <br/>
-                maxpooling, meanpooling, and random sample, satisfactory performance and negligible time cost.
+                <strong>maxpooling, meanpooling, and random sample</strong>, satisfactory performance and negligible time cost.
                 <br/>
               </p>
             </div>
@@ -306,28 +306,28 @@
               <p>
                 <strong>Ablation on prompt sampling strategies.</strong>
                 <br/>
-                <p style="text-align: justify; font-size: 16px; line-height: 1.5; margin-top: 10px; color: #f90b0be9;">
+                <p style="text-align: justify; font-size: 16px; line-height: 1.5; margin-top: 10px;">
                     <span style="color: #f90b0be9">Table 1.</span>  Experimental results (%) show that all prompt sampling strategies are significantly superior to the VPT baseline with random initialization.
                 </p>
                 <img src="static/images/table1.png" alt="1" style="width: auto; height: auto; display: block; margin: 0 auto;"/>
                 <br/>
                 <strong>Ablation on basic components.</strong>
                 <br/>
-                <p style="text-align: justify; font-size: 16px; line-height: 1.5; margin-top: 10px; color: #f90b0be9;">
+                <p style="text-align: justify; font-size: 16px; line-height: 1.5; margin-top: 10px;">
                     <span style="color: #f90b0be9">Figure 3.</span> SPT is robust to prompt length changes and presents better scaling behavior.
                 </p>
                 <img src="static/images/ablation.png" alt="1" style="width: auto; height: auto; display: block; margin: 0 auto;"/>
                 <br/>
                 <strong>Comparison under self-supervised pre-trained backbones.</strong>
                 <br/>
-                <p style="text-align: justify; font-size: 16px; line-height: 1.5; margin-top: 10px; color: #f90b0be9;">
+                <p style="text-align: justify; font-size: 16px; line-height: 1.5; margin-top: 10px;">
                     <span style="color: #f90b0be9">Table 2.</span>  Our method achieves gains of 10% to 30% in average accuracy compared to VPT, and even outperforms Full fine-tuning in 19 out of 24 cases under MAE pre-training.
                 </p>
                 <img src="static/images/table2.png" alt="1" style="width: auto; height: auto; display: block; margin: 0 auto;"/>
                 <br/>
                 <strong>Comparison under supervised pre-trained backbones.</strong>
                 <br/>
-                <p style="text-align: justify; font-size: 16px; line-height: 1.5; margin-top: 10px; color: #f90b0be9;">
+                <p style="text-align: justify; font-size: 16px; line-height: 1.5; margin-top: 10px;">
                     <span style="color: #f90b0be9">Table 3.</span>  “Input” and “Backbone” indicate the tuning parameter scope of each method. SPT achieves competitive results with far fewer trainable parameters.
                 </p>
                 <img src="static/images/table3.png" alt="1" style="width: auto; height: auto; display: block; margin: 0 auto;"/>
